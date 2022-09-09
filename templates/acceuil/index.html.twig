@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+
+{% block body %}
+    <h1>Dashboard</h1>
+
+{% for module in modules %}
+<div class="col-12">
+ <p class="row"> {{module.name}}</p>
+ <p class="row"> {{module.details}}</p>
+ <div class="row">
+{% for modulesensor in module.sensors %}
+<div class="card col-5">
+  <div class="card-body">
+   {{modulesensor.dataType.name}}:{{modulesensor.dataType.unit}}
+  <canvas class='row' id="{{modulesensor.id}}"> </canvas>
+<script>
+new Chart(document.getElementById({{modulesensor.id}}), {
+    type:'bar',
+    data:{
+        labels:["cat1","cat2","cat3"],
+        datasets:[{
+            data:[2,5,3]
+        }]
+    }
+})
+</script>
+
+  </div>
+</div>
+{% endfor %}
+    </div>
+
+</div>
+{% endfor %}
+    <div class="col-12">
+   {{ dump()}}
+    </div>
+    {% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+{% endblock %}
